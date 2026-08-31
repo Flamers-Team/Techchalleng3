@@ -404,17 +404,16 @@ Estes são os **resultados reais** que vão pra apresentação:
 
 ---
 
-## 7. Quem fez o quê
+## 7. Membros
 
-Este projeto foi desenvolvido **em equipe**, sem hierarquia formal (sem líder técnica). Todos contribuíram igualmente:
 
-| Membro | RM | Contribuições principais |
-|---|---|---|
-| 🔥 Flávio Oscar Hahn | 374132 | [Adicionar suas contribuições] |
-| 🔥 Larissa Gomes do Vale Cabrerisso Machado | 370911 | [Adicionar suas contribuições] |
-| 🔥 Michelle Almeida Nogueira Rodrigues | 372291 | Pipeline de dados (anonimização, normalização, split), indexação RAG, fine-tuning no Colab, tradução PT-BR, validação do modelo, UI Gradio, logging, documentação |
+| Membro | RM |
+|---|---|
+| 🔥 Flávio Oscar Hahn | 374132 |
+| 🔥 Larissa Gomes do Vale Cabrerisso Machado | 370911 |
+| 🔥 Michelle Almeida Nogueira Rodrigues | 372291 |
 | 🔥 Ramon Silva | 373445 | [Adicionar suas contribuições] |
-| 🔥 Selvino Wilmar Rodrigues Junior | 368570 | [Adicionar suas contribuições] |
+| 🔥 Selvino Wilmar Rodrigues Junior | 368570 | 
 
 > ⚠️ **ATENÇÃO**: Cada membro deve adicionar suas próprias contribuições nesta tabela. Se você rodou alguma parte, escreveu código, testou, etc — anote aqui.
 
