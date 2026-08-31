@@ -108,8 +108,6 @@ Resultado em `data/processed/`:
 - `train.jsonl` (14.692) / `val.jsonl` (816) / `test.jsonl` (817)
 - `synthetic_clinical_notes_anonimizado.jsonl` — 10 MB
 
-
-
 ## 🖥️ Interface Gradio (UI do Médico)
 
 O projeto inclui interface web completa em Gradio com 4 abas:
@@ -143,7 +141,6 @@ python src/ui/gradio_app.py
 
 Ver detalhes em `src/ui/gradio_app.py` (18 KB, documentado).
 
-
 ## 📄 Licença
 
 MIT — código aberto para fins acadêmicos.
@@ -163,18 +160,6 @@ Este projeto foi desenvolvido em equipe por alunos da FIAP, sem hierarquia forma
 | 🔥 Michelle Almeida Nogueira Rodrigues | 372291 |
 | 🔥 Ramon Silva | 373445 |
 | 🔥 Selvino Wilmar Rodrigues Junior | 368570 |
-
-### 🤝 Divisão de contribuições
-
-| Membro | Principais contribuições |
-|---|---|
-| **Flávio Oscar Hahn** | _A definir com a equipe_ |
-| **Larissa Gomes do Vale Cabrerisso Machado** | _A definir com a equipe_ |
-| **Michelle Almeida Nogueira Rodrigues** | Pipeline de dados (anonimização, normalização), fine-tuning, LangGraph, RAG, logging, UI Gradio |
-| **Ramon Silva** | _A definir com a equipe_ |
-| **Selvino Wilmar Rodrigues Junior** | _A definir com a equipe_ |
-
-> 📝 **Nota**: A tabela acima é um esboço inicial. Cada membro deve preencher suas contribuições reais antes da entrega final.
 
 ---
 
