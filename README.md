@@ -78,6 +78,43 @@ git checkout techchalleng3
 - **Michelle Nogueira** ([@MichelleANogueira](https://github.com/MichelleANogueira)) — Líder técnica
 - (Adicionar outros membros da equipe)
 
+
+
+## 📚 Datasets utilizados
+
+| # | Dataset | Fonte | Uso | Amostras |
+|---|---------|-------|-----|----------|
+| 1 | **MedQuAD** | NIH (público) | Fine-tuning | 16.407 → 16.325 (anonimizado) |
+| 2 | **ANVISA Medicamentos** | dados.anvisa.gov.br | RAG #2 (bulas PT-BR) | 43.445 |
+| 3 | **Synthetic Clinical Notes** | TonicAI/HuggingFace | RAG #2 (notas SOAP) | 3.381 (anonimizado) |
+| 4 | **CID-10 DATASUS** | DATASUS (público) | Mapeamento doenças PT-BR | 12.451 códigos |
+| 5 | **PubMedQA** | NIH/HuggingFace | Avaliação RAG | 211.269 |
+
+⚠️ **IMPORTANTE**: Todos os datasets com dados pessoais foram processados por
+`src/data/01_anonimizar.py` (MedQuAD) ou `src/data/04_anonimizar_synthetic.py`
+(Synthetic Notes) antes de uso em fine-tuning/RAG.
+
+## 📂 Pipeline de dados
+
+```bash
+# Passo 1: Anonimização do MedQuAD
+python src/data/01_anonimizar.py
+
+# Passo 2: Normalização + train/val/test
+python src/data/02_normalizar_e_split.py
+
+# Passo 3: Validação qualitativa (score 93.5/100)
+python src/data/03_validar_qualidade.py
+
+# Passo 4: Anonimização do Synthetic Clinical Notes
+python src/data/04_anonimizar_synthetic.py
+```
+
+Resultado em `data/processed/`:
+- `medquad_anonimizado.jsonl` — 22 MB (JSONL limpo)
+- `train.jsonl` (14.692) / `val.jsonl` (816) / `test.jsonl` (817)
+- `synthetic_clinical_notes_anonimizado.jsonl` — 10 MB
+
 ## 📄 Licença
 
 MIT — código aberto para fins acadêmicos.
