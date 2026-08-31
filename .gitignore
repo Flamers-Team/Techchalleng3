@@ -1,0 +1,142 @@
+# ===========================================================
+# .gitignore — Tech Challenge Fase 3
+# ===========================================================
+# Protege contra commit acidental de:
+# - Modelos treinados (centenas de MB)
+# - Datasets com possível PHI
+# - Tokens/credenciais
+# - Logs com dados sensíveis
+# - Checkpoints intermediários
+# - Ambiente Python (venv)
+# ===========================================================
+
+# === AMBIENTE PYTHON ===
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv/
+.env
+.env.local
+.env.*.local
+.python-version
+
+# === MODELOS TREINADOS (NUNCA COMMITAR) ===
+# Adaptadores LoRA, modelos full, checkpoints
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.gguf
+*.onnx
+checkpoints/
+models/
+biomistral-medquad-lora/
+adapter_*/
+chroma_pmc/
+chroma_internal/
+
+# === DATASETS GRANDES ===
+# Dados brutos e processados com PHI potencial
+data/raw/*.jsonl
+data/raw/*.csv
+data/raw/*.xml
+data/raw/*.zip
+data/raw/*.tar.gz
+data/processed/*.jsonl
+data/processed/*.json
+data/processed/*.csv
+data/audit/
+audit.db
+audit.db-journal
+*.db
+*.sqlite
+*.sqlite3
+
+# === LOGS E AUDITORIA ===
+*.log
+logs/
+*.log.*
+audit/
+evaluation/
+
+# === CREDENCIAIS E TOKENS ===
+# HuggingFace tokens, OpenAI keys, etc
+*.key
+*.pem
+secrets/
+credentials/
+hf_token.txt
+.env.secrets
+
+# === NOTEBOOKS ===
+# Checkpoints de Jupyter (podem ter outputs grandes)
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+profile_default/
+ipython_config.py
+
+# === IDEs ===
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# === OUTPUTS DE BUILD ===
+build/
+dist/
+*.egg-info/
+*.egg
+.eggs/
+pip-wheel-metadata/
+
+# === CACHES ===
+.cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+*.pyc
+.coverage
+htmlcov/
+.pyre/
+
+# === DADOS ESPECÍFICOS DO PROJETO ===
+# Vectorstores Chroma (regeneráveis)
+*.chroma
+*.chroma.sqlite3
+chroma_db/
+.vector_cache/
+
+# === ARQUIVOS TEMPORÁRIOS ===
+~$*
+*.tmp
+*.bak
+*.swp
+nul
+
+# === RELATÓRIOS PESADOS ===
+# Permitir txt pequenos (legíveis), bloquear PDFs/imagens pesadas
+*.pdf
+!docs/**/*.pdf
+*.png
+!docs/**/*.png
+*.jpg
+*.jpeg
+*.gif
+*.mp4
+*.mov
+
+# === OUTROS ===
+.history/
+.python_history
+.bash_history
+EOF
