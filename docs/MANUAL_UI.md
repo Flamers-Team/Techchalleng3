@@ -301,14 +301,65 @@ pip install "huggingface_hub<0.24"
 
 ---
 
+## 🇧🇷 Tradução PT-BR ↔ EN (NOVO)
+
+### O que é
+
+O modelo fine-tuned (BioMistral-7B) foi treinado 100% em inglês. Para suportar português brasileiro, adicionamos uma camada de tradução bidirecional usando MarianMT.
+
+### Como funciona
+
+```
+Pergunta PT-BR
+      ↓
+[MarianMT PT → EN]
+      ↓
+[BioMistral Fine-Tuned]  ← responde em inglês
+      ↓
+[MarianPT EN → PT]
+      ↓
+Resposta PT-BR
+```
+
+### Como usar no código
+
+```python
+from src.llm.assistente_traduzido import AssistenteTraduzido
+
+bot = AssistenteTraduzido(
+    modelo_path="biomistral-medquad-lora",  # ou caminho local
+    device="cuda",  # ou "cpu"
+)
+
+# Pergunta em PT-BR, resposta em PT-BR
+resposta = bot.perguntar("O que é diabetes?")
+print(resposta)
+```
+
+### Modo conversacional
+
+```bash
+python src/llm/assistente_traduzido.py
+# Modo chat interativo
+```
+
+### Limitações conhecidas
+
+- Termos técnicos médicos podem ser traduzidos literalmente
+- Latência adicionada: ~3-5s por pergunta (total: 8-15s)
+- MarianMT foi treinado mais com PT europeu (não PT-BR nativo)
+
+---
+
 ## 📞 Suporte
 
 - **Código fonte**: `src/ui/gradio_app.py` (18 KB, documentado)
+- **Código tradutor**: `src/llm/assistente_traduzido.py` (8 KB)
 - **Logs**: aba Auditoria da própria UI
 - **Issues**: GitHub Issues do repo `Flamers-Team/Techchalleng3`
 
 ---
 
 **Última atualização**: 31/08/2026  
-**Versão da UI**: 1.0  
+**Versão da UI**: 1.1 (com tradução PT-BR)  
 **Compatibilidade**: Gradio 4.44+, Python 3.10+

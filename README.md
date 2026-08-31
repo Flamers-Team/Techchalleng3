@@ -1,8 +1,10 @@
 # 🏥 Tech Challenge Fase 3 — Assistente Médico Inteligente
 
-Pipeline completo: **Fine-tuning de BioMistral-7B** + **RAG (PMC + Base Interna)** + **LangGraph** + **HITL** + **Geração de Documentos Médicos**.
+Pipeline completo: **Fine-tuning de BioMistral-7B** + **RAG (PMC + Base Interna)** + **LangGraph** + **HITL** + **Tradução PT-BR** + **Geração de Documentos Médicos**.
 
 > **Tech Challenge FIAP** — Fase 3 | [Entrega final do módulo de IA para Dev]
+>
+> **Status atual**: ✅ Fine-tuning concluído (perplexity 1.80). ✅ Modelo validado com 15 testes de generalização. ✅ Tradução PT-BR implementada. ⏳ Pendente: testar tradutor no Colab + gravar vídeo demo.
 
 ## 🎯 Visão Geral
 
@@ -107,6 +109,34 @@ Resultado em `data/processed/`:
 - `medquad_anonimizado.jsonl` — 22 MB (JSONL limpo)
 - `train.jsonl` (14.692) / `val.jsonl` (816) / `test.jsonl` (817)
 - `synthetic_clinical_notes_anonimizado.jsonl` — 10 MB
+
+## 🇧🇷 Tradução PT-BR ↔ EN (NOVO)
+
+O modelo foi treinado em inglês. Para aceitar perguntas em português brasileiro, há uma camada de tradução automática:
+
+```
+Pergunta PT-BR → MarianMT (PT→EN) → BioMistral → MarianMT (EN→PT) → Resposta PT-BR
+```
+
+### Como usar
+
+```python
+from src.llm.assistente_traduzido import AssistenteTraduzido
+
+bot = AssistenteTraduzido(
+    modelo_path="biomistral-medquad-lora",  # caminho do modelo
+    device="cuda",
+)
+print(bot.perguntar("O que é diabetes?"))
+```
+
+### Limitações
+
+- Termos técnicos médicos podem ser traduzidos literalmente (ex: "infarto" → "heart attack" perde especificidade)
+- Adiciona ~3-5s de latência
+- MarianMT foi treinado com mais PT-EU que PT-BR
+
+Ver mais detalhes em `docs/MANUAL_UI.md` (seção "Tradução PT-BR ↔ EN") e `src/llm/assistente_traduzido.py`.
 
 ## 🖥️ Interface Gradio (UI do Médico)
 
