@@ -115,6 +115,42 @@ Resultado em `data/processed/`:
 - `train.jsonl` (14.692) / `val.jsonl` (816) / `test.jsonl` (817)
 - `synthetic_clinical_notes_anonimizado.jsonl` — 10 MB
 
+
+
+## 🖥️ Interface Gradio (UI do Médico)
+
+O projeto inclui interface web completa em Gradio com 4 abas:
+
+```bash
+# Instalar dependência
+pip install gradio==4.44.0
+
+# Rodar a UI
+python src/ui/gradio_app.py
+```
+
+**Como acessar**:
+
+| Modo | URL | Quando usar |
+|---|---|---|
+| Local | `http://127.0.0.1:7860` | Desenvolvimento |
+| Mobile (mesma WiFi) | `http://<IP-do-PC>:7860` | Médico no celular/tablet |
+| Público | `share=True` gera URL `xxx.gradio.live` (válida 72h) | Demonstração/vídeo |
+
+**Credenciais padrão** (mude em produção):
+- Usuário: `medico`
+- Senha: `demo123`
+
+**Abas da interface**:
+
+1. **📋 Consulta** — Médico insere relato, sistema retorna triagem + RAG + síntese + HITL
+2. **📊 Auditoria** — Dashboard de logs SQLite (eventos, latência, custos)
+3. **📁 Documentos** — Lista de PDFs gerados (prontuário, atestado, receita)
+4. **⚙️ Config** — Informações do sistema + versões
+
+Ver detalhes em `src/ui/gradio_app.py` (18 KB, documentado).
+
+
 ## 📄 Licença
 
 MIT — código aberto para fins acadêmicos.
