@@ -1,5 +1,11 @@
-"""Agente 2: SÍNTESE — gera hipóteses diagnósticas + condutas."""
-import json, re
+"""
+Agente 2: SÍNTESE — gera hipóteses diagnósticas + condutas.
+Usa LLM real (BioMistral fine-tuned) se disponível, senão mock.
+"""
+
+import json
+import re
+from src.llm.client import get_llm
 
 
 SINTESE_SYSTEM_PROMPT = """Você é um assistente de SÍNTESE CLÍNICA de um hospital.
@@ -20,12 +26,15 @@ RESPONDA EM JSON ESTRITO:
 {
   "hipoteses": [{"cid10": "X.XX", "nome": "...", "probabilidade": "alta|media|baixa", "justificativa": "...", "fonte": "..."}],
   "exames_sugeridos": [{"nome": "...", "justificativa": "...", "fonte": "..."}],
-  "medicacoes_sugeridas": [{"nome": "...", "dose": "...", "frequencia": "...", "NOTA": "VALIDAÇÃO MÉDICA OBRIGATÓRIA"}],
+  "medicacoes_sugeridas": [{"nome": "...", "dose": "...", "frequencia": "...", "NOTA": "VALIDAÇÃO OBRIGATÓRIA"}],
   "observacoes": "..."
 }"""
 
 
-def sintetizar(relato: str, rag_pmc: list, rag_interno: list, llm_client) -> dict:
+def sintetizar(relato: str, rag_pmc: list, rag_interno: list) -> dict:
+    """Gera síntese usando LLM real ou fallback."""
+
+    # Formatar contexto RAG
     contexto_pmc = "\n".join(
         f"[Fonte: {c.get('source', 'PMC')}] {c.get('content', '')[:300]}"
         for c in rag_pmc[:3]
@@ -35,6 +44,8 @@ def sintetizar(relato: str, rag_pmc: list, rag_interno: list, llm_client) -> dic
         f"[Fonte: {c.get('source', 'SOP')}] {c.get('content', '')[:300]}"
         for c in rag_interno[:3]
     ) or "(sem protocolos específicos)"
+
+    llm = get_llm()
 
     messages = [
         {"role": "system", "content": SINTESE_SYSTEM_PROMPT},
@@ -50,16 +61,19 @@ RELATO: {relato}
 Resposta JSON:"""},
     ]
 
-    response = llm_client.invoke(messages)
-    text = response if isinstance(response, str) else response.content
+    text = llm.invoke(messages)
 
+    # Parse JSON
     try:
         match = re.search(r"\{.*\}", text, re.DOTALL)
         if match:
-            return json.loads(match.group(0))
+            result = json.loads(match.group(0))
+            if "hipoteses" in result or "observacoes" in result:
+                return result
     except (json.JSONDecodeError, AttributeError):
         pass
 
+    # Fallback
     return {
         "hipoteses": [],
         "exames_sugeridos": [],

@@ -1,5 +1,11 @@
-"""Agente 1: TRIAGEM — classifica urgência de relatos clínicos."""
-import json, re
+"""
+Agente 1: TRIAGEM — classifica urgência de relatos clínicos.
+Usa LLM real (BioMistral fine-tuned) se disponível, senão mock.
+"""
+
+import json
+import re
+from src.llm.client import get_llm
 
 
 TRIAGEM_SYSTEM_PROMPT = """Você é um assistente de TRIAGEM CLÍNICA de um hospital.
@@ -23,24 +29,29 @@ RESPONDA EM JSON ESTRITO:
 ⚠️ NÃO prescreva nada. NÃO dê diagnóstico. Apenas CLASSIFIQUE a urgência."""
 
 
-def triar(relato: str, llm_client) -> dict:
-    """Chama LLM para classificar urgência."""
+def triar(relato: str) -> dict:
+    """Classifica urgência usando LLM real ou fallback."""
+    llm = get_llm()
+
     messages = [
         {"role": "system", "content": TRIAGEM_SYSTEM_PROMPT},
         {"role": "user", "content": f"Relato: {relato}"},
     ]
 
-    response = llm_client.invoke(messages)
-    text = response if isinstance(response, str) else response.content
+    text = llm.invoke(messages)
 
+    # Parse JSON (try/except com fallback)
     try:
         match = re.search(r"\{.*\}", text, re.DOTALL)
         if match:
-            return json.loads(match.group(0))
+            result = json.loads(match.group(0))
+            # Validar campos
+            if "categoria" in result:
+                return result
     except (json.JSONDecodeError, AttributeError):
         pass
 
-    # Fallback seguro: assume URGENTE
+    # Fallback seguro
     return {
         "categoria": "URGENTE",
         "justificativa": "Falha no parsing — assumindo URGENTE por segurança",
