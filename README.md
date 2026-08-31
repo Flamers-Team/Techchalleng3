@@ -73,13 +73,6 @@ git checkout techchalleng3
 - [x] Projeto modularizado em Python
 - [x] README completo
 
-## 👥 Equipe
-
-- **Michelle Nogueira** ([@MichelleANogueira](https://github.com/MichelleANogueira)) — Líder técnica
-- (Adicionar outros membros da equipe)
-
-
-
 ## 📚 Datasets utilizados
 
 | # | Dataset | Fonte | Uso | Amostras |
@@ -158,3 +151,43 @@ MIT — código aberto para fins acadêmicos.
 ## 📚 Documentação completa
 
 Ver `docs/TECHCHALLENGE_FASE3_PROJETO_COMPLETO.docx` (~60 páginas).
+
+## 👥 Equipe — Flamers Team 🔥
+
+Este projeto foi desenvolvido em equipe por alunos da FIAP, sem hierarquia formal (sem líder técnica). Todos os membros contribuíram igualmente nas diferentes etapas.
+
+| Membro | RM |
+|---|---|
+| 🔥 Flávio Oscar Hahn | 374132 |
+| 🔥 Larissa Gomes do Vale Cabrerisso Machado | 370911 |
+| 🔥 Michelle Almeida Nogueira Rodrigues | 372291 |
+| 🔥 Ramon Silva | 373445 |
+| 🔥 Selvino Wilmar Rodrigues Junior | 368570 |
+
+### 🤝 Divisão de contribuições
+
+| Membro | Principais contribuições |
+|---|---|
+| **Flávio Oscar Hahn** | _A definir com a equipe_ |
+| **Larissa Gomes do Vale Cabrerisso Machado** | _A definir com a equipe_ |
+| **Michelle Almeida Nogueira Rodrigues** | Pipeline de dados (anonimização, normalização), fine-tuning, LangGraph, RAG, logging, UI Gradio |
+| **Ramon Silva** | _A definir com a equipe_ |
+| **Selvino Wilmar Rodrigues Junior** | _A definir com a equipe_ |
+
+> 📝 **Nota**: A tabela acima é um esboço inicial. Cada membro deve preencher suas contribuições reais antes da entrega final.
+
+---
+
+## 🎓 Contexto Acadêmico
+
+Projeto desenvolvido para o **Tech Challenge FIAP - Fase 3** do curso de **Inteligência Artificial para Devs**. Atende aos requisitos de:
+
+- Fine-tuning de LLM com dados médicos (BioMistral-7B + QLoRA)
+- Pipeline de preprocessing com anonimização
+- Assistente LangChain + LangGraph
+- RAG (Retrieval-Augmented Generation) com 2 fontes
+- Validação humana obrigatória (HITL)
+- Logging e auditoria completos
+- Interface para o médico (Gradio)
+- Relatório técnico e vídeo demonstrativo
+

@@ -1,6 +1,22 @@
 # Relatório Técnico — Tech Challenge Fase 3
 ## Assistente Médico Inteligente com LLM Fine-Tuned, RAG e LangGraph
 
+## Equipe
+
+Este projeto foi desenvolvido em equipe por alunos da FIAP, sem hierarquia formal (sem líder técnica). Todos os membros contribuíram igualmente nas diferentes etapas do projeto.
+
+| Membro | RM |
+|---|---|
+| Flávio Oscar Hahn | 374132 |
+| Larissa Gomes do Vale Cabrerisso Machado | 370911 |
+| Michelle Almeida Nogueira Rodrigues | 372291 |
+| Ramon Silva | 373445 |
+| Selvino Wilmar Rodrigues Junior | 368570 |
+
+
+---
+
+
 **Autora**: Michelle Nogueira (@MichelleANogueira)  
 **Organização**: Flamers Team  
 **Repositório**: https://github.com/Flamers-Team/Techchalleng3 (branch `techchalleng3`)  
