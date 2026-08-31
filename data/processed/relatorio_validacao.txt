@@ -1,0 +1,113 @@
+======================================================================
+RELATÓRIO DE VALIDAÇÃO QUALITATIVA — Passo 2.5
+Gerado em: 2026-08-31 13:01:04
+Dataset: train.jsonl
+======================================================================
+
+📊 ESTATÍSTICAS DESCRITIVAS
+----------------------------------------------------------------------
+  Total de amostras: 14,692
+
+  📏 Instruction:
+     Min:        15 chars
+     Mediana:    48 chars
+     Média:      51 chars
+     Máx:       191 chars
+     P95:        81 chars
+     P99:       100 chars
+
+  📏 Input:
+     Min:        20 chars
+     Mediana:    40 chars
+     Média:      43 chars
+     Máx:       153 chars
+     P95:        69 chars
+     P99:        89 chars
+
+  📏 Output:
+     Min:        50 chars
+     Mediana:   880 chars
+     Média:   1,077 chars
+     Máx:     2,503 chars
+     P95:     2,500 chars
+     P99:     2,503 chars
+
+  🚨 ANOMALIAS DETECTADAS:
+     Instruções vazias:                       0
+     Outputs vazios:                          0
+     Outputs sem pontuação final:         2,069
+     Outputs com placeholder (Topics...):      0
+     Outputs com PHI residual:                0
+     Outputs só com URL:                      0
+
+🚨 ANOMALIAS DETECTADAS (top 20 amostras)
+----------------------------------------------------------------------
+Total encontrado: 7 amostras com problemas
+
+Distribuição por tipo de problema:
+  • texto_repetido                           4 amostras
+  • muito_curto_sem_pontuacao                3 amostras
+
+Primeiras 20 anomalias (para revisão):
+
+  [1] muito_curto_sem_pontuacao
+      Q: What is (are) Heart Failure ?
+      R: More detailed information on heart failure is available at [URL]
+
+  [2] texto_repetido
+      Q: Who is at risk for Acanthamoeba - Granulomatous Amebic Encephalitis (GAE); Keratitis? ?
+      R: Acanthamoeba keratitis Acanthamoeba keratitis is a rare disease that can affect anyone, but is most common in individuals who wear contact lenses. In ...
+
+  [3] muito_curto_sem_pontuacao
+      Q: How many people are affected by biotinidase deficiency ?
+      R: Profound or partial biotinidase deficiency occurs in approximately 1 in 60,000 newborns
+
+  [4] muito_curto_sem_pontuacao
+      Q: What is (are) Parasites - Lymphatic Filariasis ?
+      R: Frequently Asked Questions (FAQs) Vector Information
+
+  [5] texto_repetido
+      Q: Who is at risk for Iron-Deficiency Anemia? ?
+      R: Infants and Young Children Infants and young children need a lot of iron to grow and develop. The iron that full-term infants have stored in their bod...
+
+  [6] texto_repetido
+      Q: What are the treatments for Hearing Loss ?
+      R: Assistive Listening Devices Assistive listening devices devices can help you hear in certain listening environments. These can include telephone and c...
+
+  [7] texto_repetido
+      Q: What is (are) Prevent diabetes problems: Keep your nervous system healthy ?
+      R: Peripheral Neuropathy Peripheral neuropathy is the most common type of diabetic neuropathy, and it affects the sensory nerves of your feet, legs, hand...
+
+
+🎯 ANÁLISE DE COERÊNCIA TEMÁTICA (amostra de 100)
+----------------------------------------------------------------------
+  Coerentes:                87 (87.0%)
+  Parcialmente coerentes:    5 (5.0%)
+  Incoerentes:               8 (8.0%)
+
+Exemplos de baixa coerência:
+  • What are the treatments for Familial hemiplegic migraine type 2 ?
+    Tópico: Familial hemiplegic migraine type 2
+    Palavras do tópico no output: 2/4
+
+  • What are the symptoms of Urinary Tract Infection In Adults ?
+    Tópico: Urinary Tract Infection In Adults
+    Palavras do tópico no output: 1/4
+
+  • What is (are) Leukemia ?
+    Tópico: Leukemia
+    Palavras do tópico no output: 0/1
+
+======================================================================
+📋 VEREDICTO PARA FINE-TUNING
+======================================================================
+  Score de qualidade: 93.5/100
+  Recomendação: 🟢 EXCELENTE — Pronto para fine-tuning
+
+📁 PRÓXIMOS PASSOS:
+  1. Revisar manualmente: amostras_para_revisao.json
+     (50 amostras estratificadas)
+  2. Se veredicto verde → seguir para fine-tuning no Colab Pro
+  3. Se veredicto amarelo → considerar adicionar dados sintéticos
+  4. Se veredicto vermelho → revisar filtros e re-rodar passos 1/2
+======================================================================

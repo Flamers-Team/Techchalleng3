@@ -1,0 +1,94 @@
+======================================================================
+RELATÓRIO DE ANONIMIZAÇÃO — Synthetic Clinical Notes
+Gerado em: 2026-08-31 13:27:14
+======================================================================
+
+📊 ESTATÍSTICAS GERAIS
+----------------------------------------------------------------------
+  Amostras lidas:        3,381
+  Amostras escritas:      3,381
+
+🔒 PHI SUBSTITUÍDO POR TIPO
+----------------------------------------------------------------------
+  doctor_name           7,557 substituições
+  patient_name          2,570 substituições
+  dob                   2,556 substituições
+  location              2,184 substituições
+  mrn                   1,238 substituições
+  email                    30 substituições
+  telefone                 21 substituições
+  TOTAL                16,156 substituições
+
+📋 EXEMPLO ANTES/DEPOIS
+----------------------------------------------------------------------
+
+--- Exemplo 1 ---
+ANTES (trecho):
+  **Medical Note**
+
+**Patient Name:** Harvey D'Amore  
+**Date of Birth:** September 12, 1964  
+**Medical Record Number:** HD-AM-0901964  
+**Date of Encounter:** October 18, 2023  
+**Attending Dentist:** Dr. Emily Thompson  
+**Location:** Greenfield Dental Clinic, 123 Oak Street, Springfield, IL  
+
+**Reason for Visit:**  
+Mr. Harvey D'Amore presents for a routine check-up and management of gingivitis
+
+DEPOIS (trecho):
+  **Medical Note**
+
+**[PATIENT_NAME]  
+**[DOB]  
+**[MRN]  
+**Date of Encounter:** October 18, 2023  
+**Attending Dentist:** [DOCTOR_NAME]  
+**Location:** Greenfield Dental Clinic, 123 Oak Street, Springfield, IL  
+
+**Reason for Visit:**  
+Mr. Harvey D'Amore presents for a routine check-up and management of gingivitis.
+
+**Chief Complaint:**  
+The patient reports experiencing swollen and tender gums o
+
+--- Exemplo 2 ---
+ANTES (trecho):
+  **Patient Name:** Marquis Lon Dibbert  
+**Date of Birth:** February 14, 2018  
+**Age:** 5 years  
+**Gender:** Male  
+**Ethnicity:** Black or African American  
+**Encounter Date:** October 24, 2023  
+**Location:** Green Valley Pediatric Clinic, Atlanta, GA  
+**Physician:** Dr. Emily Thompson  
+
+---
+
+**Chief Complaint:**  
+Nasal congestion and cough.
+
+**History of Present Illness:**  
+Marquis, a 5-y
+
+DEPOIS (trecho):
+  **[PATIENT_NAME]  
+**[DOB]  
+**Age:** 5 years  
+**Gender:** Male  
+**Ethnicity:** Black or African American  
+**Encounter Date:** October 24, 2023  
+**[LOCATION]lanta, GA  
+**Physician:** [DOCTOR_NAME]  
+
+---
+
+**Chief Complaint:**  
+Nasal congestion and cough.
+
+**History of Present Illness:**  
+Marquis, a 5-year-old male, was brought in by his mother, Ms. Angela Dibbert, with symptoms suggestive o
+
+======================================================================
+✅ Anonimização concluída.
+======================================================================

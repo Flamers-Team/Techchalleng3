@@ -140,3 +140,13 @@ nul
 .python_history
 .bash_history
 EOF
+
+# ChromaDB vector store (regenerável, paths absolutos)
+chroma_index/
+chroma_pmc/
+chroma_internal/
+*.chroma
+*.chroma.sqlite3
+
+# Embeddings em cache (~250MB, regeneráveis)
+.cache/

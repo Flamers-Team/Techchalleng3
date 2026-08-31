@@ -1,0 +1,4 @@
+*.arrow filter=lfs diff=lfs merge=lfs -text
+*.jsonl filter=lfs diff=lfs merge=lfs -text
+*.csv filter=lfs diff=lfs merge=lfs -text
+MedQuAD-master/** filter=lfs diff=lfs merge=lfs -text

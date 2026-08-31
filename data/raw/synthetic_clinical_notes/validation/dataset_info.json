@@ -1,0 +1,92 @@
+{
+  "builder_name": "parquet",
+  "citation": "",
+  "config_name": "default",
+  "dataset_name": "synthetic_clinical_notes",
+  "dataset_size": 10801968,
+  "description": "",
+  "download_size": 5233353,
+  "features": {
+    "note": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "encounter_data": {
+      "age": {
+        "dtype": "int64",
+        "_type": "Value"
+      },
+      "encounter_type": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "gender": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "medications": {
+        "feature": {
+          "dtype": "string",
+          "_type": "Value"
+        },
+        "_type": "List"
+      },
+      "name": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "procedures": {
+        "feature": {
+          "dtype": "string",
+          "_type": "Value"
+        },
+        "_type": "List"
+      },
+      "race": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "reason": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "name_given": {
+        "dtype": "string",
+        "_type": "Value"
+      },
+      "name_family": {
+        "dtype": "string",
+        "_type": "Value"
+      }
+    }
+  },
+  "homepage": "",
+  "license": "",
+  "size_in_bytes": 16035321,
+  "splits": {
+    "train": {
+      "name": "train",
+      "num_bytes": 3282324,
+      "num_examples": 1028,
+      "dataset_name": "synthetic_clinical_notes"
+    },
+    "validation": {
+      "name": "validation",
+      "num_bytes": 2172137,
+      "num_examples": 672,
+      "dataset_name": "synthetic_clinical_notes"
+    },
+    "test": {
+      "name": "test",
+      "num_bytes": 5347507,
+      "num_examples": 1681,
+      "dataset_name": "synthetic_clinical_notes"
+    }
+  },
+  "version": {
+    "version_str": "0.0.0",
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  }
+}
