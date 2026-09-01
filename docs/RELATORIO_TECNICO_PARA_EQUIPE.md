@@ -15,9 +15,7 @@ Este projeto foi desenvolvido em equipe por alunos da FIAP, sem hierarquia forma
 
 
 ---
-
-
-**Autora**: Michelle Nogueira (@MichelleANogueira)  
+  
 **Organização**: Flamers Team  
 **Repositório**: https://github.com/Flamers-Team/Techchalleng3 (branch `main`)
 **Data**: Agosto 2026  
