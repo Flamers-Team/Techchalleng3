@@ -4,7 +4,7 @@ Pipeline completo: **Fine-tuning de BioMistral-7B** + **RAG (PMC + Base Interna)
 
 > **Tech Challenge FIAP** — Fase 3 | [Entrega final do módulo de IA para Dev]
 >
-> **Status atual**: ✅ Fine-tuning concluído (perplexity 1.80). ✅ Modelo validado com 15 testes de generalização. ✅ Tradução PT-BR implementada. ⏳ Pendente: testar tradutor no Colab + gravar vídeo demo.
+> **Status atual**: ✅ Fine-tuning concluído (perplexidade validação 2.18, base 4.31 — **redução de 49.4%**). ✅ Modelo validado com 15 testes de generalização. ✅ Tradução PT-BR implementada. ⏳ Pendente: testar tradutor no Colab + gravar vídeo demo.
 
 ## 🎯 Visão Geral
 
