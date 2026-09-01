@@ -310,7 +310,7 @@ Pergunta PT-BR → MarianMT (traduz PT→EN) → BioMistral (responde EN) → Ma
 
 - **Organização**: Flamers-Team
 - **Repositório**: Techchalleng3 (privado)
-- **Branch principal**: techchalleng3
+- **Branch principal**: main
 - **Total**: 11 mil arquivos, 534 MB
 - **Git LFS**: ativo para datasets grandes
 

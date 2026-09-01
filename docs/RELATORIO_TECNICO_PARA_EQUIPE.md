@@ -19,7 +19,7 @@ Este projeto foi desenvolvido em equipe por alunos da FIAP, sem hierarquia forma
 
 **Autora**: Michelle Nogueira (@MichelleANogueira)  
 **Organização**: Flamers Team  
-**Repositório**: https://github.com/Flamers-Team/Techchalleng3 (branch `techchalleng3`)  
+**Repositório**: https://github.com/Flamers-Team/Techchalleng3 (branch `main`)
 **Data**: Agosto 2026  
 **Status**: ✅ Fine-tuning concluído, modelo validado. Pendente: deploy/demo.
 
@@ -622,7 +622,7 @@ Techchalleng3/                          (GitHub: Flamers-Team/Techchalleng3)
 ## 11. Contatos e Recursos
 
 - **Repositório**: https://github.com/Flamers-Team/Techchalleng3
-- **Branch principal**: `techchalleng3`
+- **Branch principal**: `main`
 - **Issues/bugs**: abrir no GitHub Issues do repo
 - **Documentação adicional**: `docs/TECHCHALLENGE_FASE3_PROJETO_COMPLETO.docx`
 - **Guia de datasets**: `docs/GUIA_DATASETS.md`

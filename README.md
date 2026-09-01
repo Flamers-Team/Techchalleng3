@@ -59,9 +59,7 @@ python src/data/03_validar_qualidade.py
 
 ### 3. Branch de trabalho
 
-```bash
-git checkout techchalleng3
-```
+A branch `main` é a única branch ativa. Todo o código completo está nela.
 
 ## 📋 Requisitos Atendidos
 
