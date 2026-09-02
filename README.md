@@ -4,7 +4,7 @@ Pipeline completo: **Fine-tuning de BioMistral-7B** + **RAG (PMC + Base Interna)
 
 > **Tech Challenge FIAP** — Fase 3 | [Entrega final do módulo de IA para Dev]
 >
-> **Status atual**: ✅ Fine-tuning concluído (perplexidade validação 2.18, base 4.31 — **redução de 49.4%**). ✅ Modelo validado com 15 testes de generalização. ✅ Tradução PT-BR implementada. ⏳ Pendente: testar tradutor no Colab + gravar vídeo demo.
+> **Status atual**: ✅ Fine-tuning concluído (perplexidade validação 2.18, base 4.31 — **redução de 49.4%**). ✅ Modelo validado com 15 testes de generalização. ✅ Tradução PT-BR implementada. ✅ **RAG substituído pelo ChatBulário** (10k bulas PT-BR indexadas). ⏳ Pendente: testar tradutor no Colab + gravar vídeo demo.
 
 ## 🎯 Visão Geral
 
@@ -78,10 +78,12 @@ A branch `main` é a única branch ativa. Todo o código completo está nela.
 | # | Dataset | Fonte | Uso | Amostras |
 |---|---------|-------|-----|----------|
 | 1 | **MedQuAD** | NIH (público) | Fine-tuning | 16.407 → 16.325 (anonimizado) |
-| 2 | **ANVISA Medicamentos** | dados.anvisa.gov.br | RAG #2 (bulas PT-BR) | 43.445 |
+| 2 | ⭐ **ChatBulário** | HuggingFace | **RAG #2 (bulas completas PT-BR)** | **68.938** pares Q&A |
 | 3 | **Synthetic Clinical Notes** | TonicAI/HuggingFace | RAG #2 (notas SOAP) | 3.381 (anonimizado) |
 | 4 | **CID-10 DATASUS** | DATASUS (público) | Mapeamento doenças PT-BR | 12.451 códigos |
 | 5 | **PubMedQA** | NIH/HuggingFace | Avaliação RAG | 211.269 |
+
+**⭐ ATUALIZAÇÃO ago/2026**: O dataset `anvisa_medicamentos.csv` (que só tinha metadados) foi substituído pelo **ChatBulário** — pares pergunta-resposta com texto completo das bulas em PT-BR, 9 seções padronizadas (RDC 47/2009). Resolveu o problema do RAG multilíngue. Detalhes em [`docs/GUIA_DATASETS.md`](docs/GUIA_DATASETS.md).
 
 ⚠️ **IMPORTANTE**: Todos os datasets com dados pessoais foram processados por
 `src/data/01_anonimizar.py` (MedQuAD) ou `src/data/04_anonimizar_synthetic.py`

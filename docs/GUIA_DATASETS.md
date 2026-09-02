@@ -8,12 +8,15 @@
 |---|---------|--------|----------------|
 | ✅ | **MedQuAD** | JÁ TEM em `Downloads/dataset/medquad_finetuning.jsonl` | Fine-tuning |
 | ✅ | **LiveQA-Med** | JÁ TEM em `QA-TestSet-LiveQA-Med-Qrels-2479-Answers/` | Avaliar RAG |
-| 🔲 | **PubMedQA** | PRECISA BAIXAR | Complementar fine-tuning |
-| 🔲 | **PMC Open Access Subset** | PRECISA BAIXAR (ou subset) | RAG #1 literatura |
-| 🔲 | **ANVISA Medicamentos** | PRECISA BAIXAR CSV | RAG #2 interno |
-| 🔲 | **Synthetic Clinical Notes** | PRECISA BAIXAR | RAG #2 interno / fine-tuning |
-| 🔲 | **CID-10 DATASUS** | PRECISA BAIXAR CSV | Mapeamento de doenças (PT-BR) |
-| ⚠️ | **MIMIC-III** | OPCIONAL (requer aprovação) | Fine-tuning (burocracia) |
+| ✅ | **PubMedQA** | JÁ BAIXADO (HuggingFace) | Complementar fine-tuning |
+| 🔲 | **PMC Open Access Subset** | OPCIONAL (subset) | RAG #1 literatura |
+| ✅ | **ChatBulário** ⭐ | **JÁ BAIXADO** em `data/raw/chatbulario_*.jsonl` | **RAG #2 interno (medicamentos)** |
+| ✅ | **Synthetic Clinical Notes** | JÁ BAIXADO | RAG #2 interno / fine-tuning |
+| ✅ | **CID-10 DATASUS** | JÁ BAIXADO | Mapeamento de doenças (PT-BR) |
+| ⚠️ | **MIMIC-III** | REJEITADO (requer aprovação + DUA) | Fine-tuning (burocracia) |
+| 🗑️ | ~~ANVISA Medicamentos (CSV)~~ | **SUBSTITUÍDO por ChatBulário** | ~~RAG #2 metadados~~ |
+
+**⭐ ATUALIZAÇÃO AGO/2026**: O dataset `anvisa_medicamentos.csv` (que só tinha metadados: nome do remédio, classe terapêutica, registro) foi **substituído pelo ChatBulário** (pares pergunta-resposta com texto completo das bulas em PT-BR, 9 seções da RDC 47/2009). Detalhes na seção "ChatBulário" abaixo.
 
 ---
 
@@ -80,6 +83,57 @@ ds = load_dataset("TonicAI/synthetic_clinical_notes")
 curl -L -o cid10.zip https://github.com/cleytonferrari/CidDataSus/raw/master/CIDImport/Repositorio/Resources/CID10CSV.zip
 ```
 - **Formato**: CSV separado por ponto-e-vírgula
+
+---
+
+### 5. ⭐ **ChatBulário** (bulas PT-BR — substitui ANVISA)
+
+- **Por que**: dataset que combina **todas as bulas de medicamentos ANVISA em formato pergunta-resposta em PT-BR**. Resolveu o problema do RAG multilíngue (que tinha ANVISA só com metadados + outras bases em inglês).
+- **Fonte**: https://huggingface.co/datasets/walmeidadf/ChatBulario
+- **Tamanho**: ~200 MB (3 splits JSONL)
+- **Formato**: JSONL com 18 colunas (nome, classe, princípio ativo, **pergunta**, **resposta**, seção, etc)
+- **Total**: **68.938 pares Q&A** (~5.724 medicamentos únicos × ~12 perguntas cada)
+- **9 seções padronizadas** (RDC 47/2009):
+  1. Para que é indicado
+  2. Como funciona
+  3. Quando não usar (contraindicações)
+  4. Cuidados antes de usar
+  5. Interações medicamentosas
+  6. Como usar (posologia)
+  7. Efeitos adversos
+  8. O que fazer se esquecer
+  9. Superdosagem
+
+**Download via Python**:
+```python
+from datasets import load_dataset
+
+# Baixa pra data/raw/
+ds = load_dataset(
+    "walmeidadf/ChatBulario",
+    cache_dir="data/raw"
+)
+
+# Salvar em JSONL
+import json
+for split in ["train", "validation", "test"]:
+    with open(f"data/raw/chatbulario_{split}.jsonl", "w", encoding="utf-8") as f:
+        for sample in ds[split]:
+            f.write(json.dumps(sample, ensure_ascii=False) + "\n")
+```
+
+**Indexar no ChromaDB**:
+```bash
+# Indexar TODAS as 68k (demora ~35min em CPU)
+python src/rag/build_index_chatbulario.py
+
+# OU só 10k pra teste rápido (~5min)
+python src/rag/build_index_chatbulario.py 10000
+```
+
+**Por que essa mudança foi crítica**: o `anvisa_medicamentos.csv` original só tinha metadados (ex: "Paracetamol | ANALGESICOS"), o que limitava o RAG a buscar por nome. Com o ChatBulário, o sistema agora responde "efeitos colaterais de paracetamol", "posologia de ibuprofeno", "interação medicamentosa de AAS" — impossível antes.
+
+**Limitação conhecida**: o ChatBulário só cobre medicamentos com bulas completas no Bulário Eletrônico ANVISA. Medicamentos muito novos ou antigos podem estar faltando.
 
 ---
 

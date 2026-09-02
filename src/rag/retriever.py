@@ -1,10 +1,13 @@
 """
 Wrapper do ChromaDB pra consultas RAG.
 
+Usa o dataset ChatBulário (68k bulas em PT-BR) indexado em data/processed/chroma_index/chatbulario.
+Substituiu o anvisa_medicamentos.csv original (que só tinha metadados).
+
 Uso:
     from src.rag.retriever import Retriever
     retriever = Retriever()
-    chunks = retriever.retrieve("dor torácica em idoso", k=4)
+    chunks = retriever.retrieve("efeitos colaterais de paracetamol", k=4)
 
 Autor: Michelle Nogueira (Tech Challenge FIAP - Fase 3)
 """
@@ -16,13 +19,16 @@ from chromadb.config import Settings
 from chromadb.utils import embedding_functions
 import os
 
+# Desabilita telemetry
+os.environ["ANONYMIZED_TELEMETRY"] = "False"
 
-# Caminho padrão do ChromaDB (gerado por build_index_local.py)
-DEFAULT_CHROMA_DIR = Path("chroma_index")
+
+# Caminho padrão do ChromaDB (gerado por build_index_chatbulario.py)
+DEFAULT_CHROMA_DIR = Path(__file__).resolve().parents[2] / "data" / "processed" / "chroma_index"
 
 
 class Retriever:
-    """Wrapper que consulta os 3 vector stores (ANVISA, CID-10, Synthetic Notes)."""
+    """Wrapper que consulta os vector stores (ChatBulário, CID-10, Synthetic Notes)."""
 
     def __init__(self, chroma_dir: Path = DEFAULT_CHROMA_DIR):
         self.chroma_dir = Path(chroma_dir)
@@ -30,7 +36,7 @@ class Retriever:
         if not self.chroma_dir.exists():
             raise FileNotFoundError(
                 f"ChromaDB não encontrado em {self.chroma_dir}. "
-                "Rode primeiro: python src/rag/build_index_local.py"
+                "Rode primeiro: python src/rag/build_index_chatbulario.py"
             )
 
         self.client = chromadb.PersistentClient(
@@ -45,8 +51,9 @@ class Retriever:
         )
 
         # Conectar às collections existentes
+        # IMPORTANTE: "chatbulario" substituiu "anvisa" no projeto
         self.collections = {}
-        for nome in ["anvisa", "cid10", "synthetic"]:
+        for nome in ["chatbulario", "cid10", "synthetic"]:
             try:
                 self.collections[nome] = self.client.get_collection(
                     name=nome,
@@ -56,9 +63,14 @@ class Retriever:
             except Exception as e:
                 print(f"⚠️  Collection '{nome}' não encontrada: {e}")
 
+    def retrieve_chatbulario(self, query: str, k: int = 4) -> List[Dict]:
+        """Busca no ChatBulário (bulas completas em PT-BR)."""
+        return self._retrieve("chatbulario", query, k)
+
+    # Alias para retrocompatibilidade (alguns lugares ainda chamam retrieve_anvisa)
     def retrieve_anvisa(self, query: str, k: int = 4) -> List[Dict]:
-        """Busca na base de medicamentos ANVISA."""
-        return self._retrieve("anvisa", query, k)
+        """Mantido por retrocompatibilidade - agora usa ChatBulário."""
+        return self.retrieve_chatbulario(query, k)
 
     def retrieve_cid10(self, query: str, k: int = 4) -> List[Dict]:
         """Busca na base de códigos CID-10."""
@@ -69,11 +81,11 @@ class Retriever:
         return self._retrieve("synthetic", query, k)
 
     def retrieve_interno(self, query: str, k: int = 4) -> List[Dict]:
-        """Busca combinada na base interna (ANVISA + CID-10 + Synthetic)."""
+        """Busca combinada na base interna (ChatBulário + CID-10 + Synthetic)."""
         chunks = []
         # Distribuir k entre as 3 sources
         per_source = max(1, k // 3)
-        for source in ["anvisa", "cid10", "synthetic"]:
+        for source in ["chatbulario", "cid10", "synthetic"]:
             chunks.extend(self._retrieve(source, query, per_source))
         return chunks[:k]
 
@@ -141,24 +153,28 @@ class Retriever:
 # ============================================================
 if __name__ == "__main__":
     print("="*60)
-    print("🔍 TESTANDO RETRIEVER")
+    print("🔍 TESTANDO RETRIEVER (ChatBulário)")
     print("="*60)
 
     retriever = Retriever()
 
     # Testar retrieval
-    print("\n--- ANVISA ---")
-    resultados = retriever.retrieve_anvisa("paracetamol adulto", k=3)
+    print("\n--- CHATBULÁRIO (PT-BR, bulas completas) ---")
+    resultados = retriever.retrieve_chatbulario("paracetamol adulto", k=3)
     for r in resultados:
-        print(f"   • {r['metadata'].get('nome', '?')[:60]}")
-        print(f"     {r['content'][:80]}...")
+        meta = r['metadata']
+        print(f"   • {meta.get('nome_produto', '?')[:60]}")
+        print(f"     Seção: {meta.get('secao_id', '?')} | {meta.get('classe_terapeutica', '')[:60]}")
+        # Mostra primeiro pedaço da resposta
+        content_lines = r['content'].split("\n")
+        for line in content_lines:
+            if line.startswith("Resposta:"):
+                print(f"     {line[:100]}...")
+                break
 
     print("\n--- INTERNO (combinado) ---")
-    resultados = retriever.retrieve_interno("dor torácica", k=4)
+    resultados = retriever.retrieve_interno("efeitos colaterais de AAS", k=4)
     for r in resultados:
-        print(f"   • [{r['rag_source']}] {r['source'][:40]}")
-
-    print("\n--- PMC (mock) ---")
-    resultados = retriever.retrieve_pmc("sepsis treatment", k=2)
-    for r in resultados:
-        print(f"   • [{r['source']}] {r['content'][:80]}")
+        meta = r['metadata']
+        nome = meta.get('nome_produto', meta.get('source', '?'))[:40]
+        print(f"   • [{r['rag_source']}] {nome}")

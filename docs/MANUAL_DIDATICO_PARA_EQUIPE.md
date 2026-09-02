@@ -213,14 +213,16 @@ Sub-etapas:
 
 ### ✅ Etapa 3: Datasets auxiliares (2 dias)
 
-Baixamos mais 4 datasets pra completar o projeto:
+Baixamos mais 5 datasets pra completar o projeto:
 
 | Dataset | O que tem | Tamanho | Uso |
 |---|---|---|---|
-| ANVISA | 43 mil bulas de medicamentos BR | 8 MB | RAG |
-| Synthetic Clinical Notes | 3.381 notas SOAP sintéticas | 10 MB | RAG |
+| ⭐ **ChatBulário** | 68.938 pares Q&A de bulas ANVISA em PT-BR | 200 MB | RAG medicamentos |
+| Synthetic Clinical Notes | 3.381 notas SOAP sintéticas | 10 MB | RAG casos clínicos |
 | CID-10 | 12 mil códigos de doenças | 1 MB | Mapeamento |
 | PubMedQA | 211 mil perguntas PubMed | 100 MB | Avaliação |
+
+**⭐ Atualização ago/2026**: O dataset `anvisa_medicamentos.csv` (que só tinha metadados: nome do remédio, classe) foi **substituído pelo ChatBulário**, que tem o **texto completo das bulas** organizado em 9 seções padronizadas (RDC 47/2009). Isso resolveu o problema do RAG não conseguir responder "efeitos colaterais de X" ou "posologia de Y".
 
 ### ✅ Etapa 4: RAG (Retrieval-Augmented Generation) (2 dias)
 

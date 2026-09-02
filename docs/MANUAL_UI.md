@@ -355,11 +355,50 @@ python src/llm/assistente_traduzido.py
 
 - **Código fonte**: `src/ui/gradio_app.py` (18 KB, documentado)
 - **Código tradutor**: `src/llm/assistente_traduzido.py` (8 KB)
+- **Código RAG**: `src/rag/retriever.py` + `src/rag/build_index_chatbulario.py`
 - **Logs**: aba Auditoria da própria UI
 - **Issues**: GitHub Issues do repo `Flamers-Team/Techchalleng3`
 
 ---
 
+## 🗄️ RAG — Base de Conhecimento (ATUALIZADO AGO/2026)
+
+### O que mudou
+
+Até ago/2026 o RAG usava `anvisa_medicamentos.csv` (só metadados). Agora usa **ChatBulário** (texto completo das bulas em PT-BR).
+
+### Comparação
+
+| Aspecto | Antes (anvisa_medicamentos.csv) | Agora (ChatBulário) |
+|---|---|---|
+| Conteúdo | Nome, classe, registro, princípio ativo | **Texto completo da bula** |
+| Formato | CSV tabular | Pares pergunta-resposta |
+| Total | 43.445 metadados | **68.938 pares Q&A** |
+| Idioma | PT-BR (metadados) | PT-BR (texto natural) |
+| Perguntas suportadas | "Qual o nome deste remédio?" | "Efeitos colaterais", "Posologia", "Interação medicamentosa" |
+
+### Como funciona na UI
+
+A aba **Consulta** mostra, na seção "Fontes consultadas":
+
+```
+[1] Fonte: ChatBulario-137640173-7 (CALMAN - seção 7: Efeitos adversos)
+[2] Fonte: ChatBulario-155840515-3 (OLANZAPINA - seção 3: Quando não usar)
+[3] Fonte: ChatBulario-102351448-1 (OLIRE - seção 1: Para que é indicado)
+```
+
+### Como reindexar (se precisar)
+
+```bash
+# Indexar 10k amostras (~5min, suficiente pra demo)
+python src/rag/build_index_chatbulario.py 10000
+
+# Indexar TODAS as 68k (~35min em CPU)
+python src/rag/build_index_chatbulario.py
+```
+
+---
+
 **Última atualização**: 31/08/2026  
-**Versão da UI**: 1.1 (com tradução PT-BR)  
+**Versão da UI**: 1.2 (com ChatBulário RAG + tradução PT-BR)  
 **Compatibilidade**: Gradio 4.44+, Python 3.10+

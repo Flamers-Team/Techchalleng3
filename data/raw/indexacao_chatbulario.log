@@ -1,0 +1,69 @@
+======================================================================
+📥 INDEXAÇÃO DO CHATBULÁRIO NO CHROMADB
+======================================================================
+
+📂 Carregando amostras do ChatBulário...
+   Total disponível: 68,938 pares Q&A
+   ⚡ Limitado a: 10,000 amostras (modo demo rápido)
+
+🔌 Conectando ao ChromaDB em C:\Users\Teste\Downloads\Techchalleng3\data\processed\chroma_index...
+Failed to send telemetry event ClientStartEvent: capture() takes 1 positional argument but 3 were given
+
+ℹ️  Collection 'anvisa' não existia (ok)
+
+📦 Criando collection 'chatbulario'...
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+
+⏳ Indexando 10,000 documentos (batch=1000)...
+Failed to send telemetry event CollectionAddEvent: capture() takes 1 positional argument but 3 were given
+   ✅  1,000/10,000 ( 10.0%) - 32 docs/s - ETA: 280s
+   ✅  2,000/10,000 ( 20.0%) - 33 docs/s - ETA: 245s
+   ✅  3,000/10,000 ( 30.0%) - 33 docs/s - ETA: 213s
+   ✅  4,000/10,000 ( 40.0%) - 33 docs/s - ETA: 181s
+   ✅  5,000/10,000 ( 50.0%) - 33 docs/s - ETA: 150s
+   ✅  6,000/10,000 ( 60.0%) - 33 docs/s - ETA: 121s
+   ✅  7,000/10,000 ( 70.0%) - 33 docs/s - ETA: 91s
+   ✅  8,000/10,000 ( 80.0%) - 33 docs/s - ETA: 61s
+   ✅  9,000/10,000 ( 90.0%) - 33 docs/s - ETA: 30s
+   ✅ 10,000/10,000 (100.0%) - 33 docs/s - ETA: 0s
+
+🎉 Indexação completa em 302s (33 docs/s)
+   Collection: 'chatbulario'
+   Total de documentos: 10,000
+
+======================================================================
+🧪 TESTE DE RETRIEVAL
+======================================================================
+
+❓ Query: 'efeitos colaterais de paracetamol'
+Failed to send telemetry event CollectionQueryEvent: capture() takes 1 positional argument but 3 were given
+   [1] Sonridor Caf (seção 2) - dist=0.293
+       Resposta: Sonridor Caf contém paracetamol, que reduz a febre agindo no centro regulador da temperatura do corpo e
+   [2] Doril® Enxaqueca (seção 3) - dist=0.322
+       Resposta: Não tome Doril® Enxaqueca: se você for alérgico ou hipersensível a qualquer um dos componentes da
+   [3] Sonridor (seção 7) - dist=0.337
+       Resposta: Você pode tomar a dose deste medicamento assim que se lembrar, respeitando o intervalo mínimo de 4
+
+❓ Query: 'para que serve amoxicilina'
+   [1] AMOXICILINA (seção 9) - dist=0.430
+       Resposta: É pouco provável que ocorram problemas graves em caso de superdosagem de amoxicilina. As reações mais comuns
+   [2] VP (seção 4) - dist=0.432
+       Resposta: 
+   [3] amoxicilina (seção 9) - dist=0.436
+       Resposta: amoxicilina_cap dura_VP_V14
+
+❓ Query: 'posologia de ibuprofeno adulto'
+   [1] ibuprofeno (seção 2) - dist=0.312
+       Resposta: O ibuprofeno exerce atividades contra a dor e contra a febre. O início de ação ocorre de 15 a 30 minutos
+   [2] ibuprofeno (seção 2) - dist=0.312
+       Resposta: O ibuprofeno exerce atividades contra a dor e contra a febre. O início de ação ocorre de 15 a 30 minutos após 
+   [3] IBUPROFENO (seção 1) - dist=0.325
+       Resposta: O ibuprofeno é um medicamento indicado para redução da febre e para o alívio de dores, tais como: dores decorr
+
+❓ Query: 'interação medicamentosa AAS'
+   [1] GINKGO VITAL (seção 9) - dist=0.323
+       Resposta: Em caso de superdosagem, suspender o uso e procurar orientação médica de imediato.
+   [2] alopurinol (seção 9) - dist=0.326
+       Resposta: Foram observados sinais e sintomas como enjoo, vômito, diarreia e tonteira em um paciente que ingeriu 20g de
+   [3] Sporanox® (seção 9) - dist=0.331
+       Resposta: Se você tomar uma grande quantidade do medicamento acidentalmente, deve procurar um médico imediatamente.

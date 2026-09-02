@@ -153,6 +153,24 @@ O Tech Challenge Fase 3 exige a construção de um **assistente médico intelige
 | intfloat/e5-large-v2 | 1024 | 🐢 Lento | Top multilingual | ❌ (overkill pra Tech Challenge) |
 | BAAI/bge-large-en-v1.5 | 1024 | 🐢 Lento | Top EN | ❌ |
 
+**Dataset RAG de medicamentos**: **ChatBulário** (substituiu `anvisa_medicamentos.csv` em ago/2026).
+
+| Critério | anvisa_medicamentos.csv (antigo) | ChatBulário (atual) |
+|---|---|---|
+| Fonte | OpenData ANVISA | HuggingFace `walmeidadf/ChatBulario` |
+| Conteúdo | Só metadados (nome, classe, registro) | **Texto completo das bulas** |
+| Formato | CSV tabular | **Pares pergunta-resposta** |
+| Idioma | PT-BR | 🇧🇷 PT-BR puro |
+| Estrutura | Nenhuma | 9 seções padronizadas (RDC 47/2009) |
+| Total | 43.445 medicamentos | **68.938 pares Q&A** (~5.724 medicamentos únicos) |
+| Cobertura RAG | Apenas metadados | Indicações, posologia, contraindicações, **efeitos adversos**, interações, superdosagem |
+| Cross-language | Resolve só cross-language técnico | **Resolve problema cross-language do MiniLM** |
+| Licença | Pública | Pública (HuggingFace) |
+
+**Por que essa mudança foi crítica**: o `anvisa_medicamentos.csv` original só tinha metadados (ex: "Paracetamol | ANALGESICOS"), o que limitava o RAG a buscar por nome de medicamento. Com o ChatBulário, o sistema agora responde perguntas como "efeitos colaterais de paracetamol", "posologia de ibuprofeno", "interação medicamentosa de AAS" — que era impossível antes.
+
+**Limitação conhecida**: o MiniLM-L6-v2 ainda tem dificuldades cross-language em algumas palavras do dia-a-dia (ex: "febre" vs "fever" tem score baixo). Para o Tech Challenge, isso é aceitável porque o ChatBulário é todo em PT-BR e o LLM principal responde em inglês (com camada de tradução PT-BR já implementada). Para produção, considerar upgrade para `intfloat/multilingual-e5-large`.
+
 ### 2.6. Sistema Multi-Agente: 3 Agentes LangGraph
 
 **Por que 3 agentes e não mais**:
